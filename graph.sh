@@ -26,4 +26,19 @@ graph_print ()
 	done
 }
 
+graph_info ()
+{
+	echo
+	echo "📊 ГРАФ ИЗ ФАЙЛА: $1"
+	echo "─────────────────────────────────────────"
+    echo "• Прочитано ребер: ${#graph[@]}"
+    echo "• Формат данных: source target weight"
+    echo "• Обработка: $(date)"
+    if [[ ${#graph[@]} -eq 0 ]]; then
+            echo "• ⚠️  ВНИМАНИЕ: Граф пуст!"
+    fi
+    echo
+}
+
+graph_info
 graph_print graph
