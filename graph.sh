@@ -40,5 +40,33 @@ graph_info ()
     echo
 }
 
+bfs ()
+{
+	local begin=$1
+	local end=$2
+	local input_graph=$3
+
+	local queue=()
+	declare -A visited
+
+	queue+=("$begin")
+	visited["$begin"]=1
+
+	while [ $(queue[@]) -gt 0  ]; do
+		local current="$queue[0]"
+		queue=($queue[@]:1)
+
+		if [ "$current" == "$end" ]; then
+			echo "True"
+			return 0
+		fi
+		
+
+		local neighs
+
+		if grep -q "$current"
+	
+}
+
 graph_info
 graph_print graph
