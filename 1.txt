@@ -3,4 +3,3 @@ C D 3
 X Y 7
 A C 4
 C Y 3
-Y X 7

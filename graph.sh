@@ -1,6 +1,8 @@
 #!/bin/bash
 
-if [[ $# -ne 1 ]]; then
+oriented=0
+
+if [[ $# -lt 1 ]] || [[ $# -gt 2  ]]; then
 	echo "Использование: $0 <file>"
 	exit 1
 fi
@@ -9,19 +11,38 @@ if [[ ! -f $1 ]]; then
 	echo "Файл $1 не существует"
 	exit 1
 fi
+
+if [[ $# -eq 2  ]]; then
+	oriented=$2
+fi
+echo $oriented
 declare -a order
 declare -A graph
 declare -A nodes
+
 
 while read source target weight; do
 	graph["$source, $target"]=$weight
 	order+=("$source, $target")
 
+	if [[ $oriented -eq 0 ]]; then
+		graph["$target, $source"]=$weight
+		order+=("$target, $source")
+	fi
+	
 	if [ -z "${nodes[$source]}" ]; then
 		nodes["$source"]="$target"
+		if [[ $oriented -eq 0  ]]; then
+			nodes["$target"]="$source"
+		fi
 	else
 		nodes["$source"]="${nodes[$source]} $target"
-	fi		 
+		if [[ $oriented -eq 0  ]]; then
+			nodes["$target"]="${nodes[$target]} $source"
+		fi
+	fi
+
+			 
 	
 done < $1
 
